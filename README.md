@@ -26,7 +26,7 @@ Be aware that by making a pull request, you agree to release your modifications 
 
 ## Migrating from `combined-stream`
 
-Note that there are a few important differences between `combined-stream` and `combined-stream`:
+Note that there are a few important differences between `combined-stream` and `combined-stream2`:
 
 * You cannot supply strings, only Buffers and streams. This is because `combined-stream2` doesn't know what the encoding of your string would be, and can't guess safely. You will need to manually encode strings to a Buffer before passing them on to `combined-stream2`.
 * The `pauseStreams` option does not exist. All streams are read lazily in non-flowing mode; that is, no data is read until something explicitly tries to read the combined stream.
