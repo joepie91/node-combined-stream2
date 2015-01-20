@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.cryto.net:projects/joepie91/node-combined-stream2"
+    "url": "git://github.com/joepie91/node-combined-stream2"
   },
   "keywords": [
     "stream",
