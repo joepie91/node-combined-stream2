@@ -1,5 +1,5 @@
 {
-  "name": "node-combined-stream2",
+  "name": "combined-stream2",
   "version": "1.0.0",
   "description": "A drop-in Streams2-compatible replacement for combined-stream.",
   "main": "index.js",
