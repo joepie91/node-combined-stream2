@@ -61,11 +61,12 @@ class CombinedStream extends stream.Readable
 				else
 					streamLength source[0]
 
-	getCombinedStreamLength: ->
+	getCombinedStreamLength: (callback) ->
 		debug "getting combined stream length"
 		Promise.try =>
 			@getStreamLengths()
 		.reduce ((total, current) -> total + current), 0
+		.nodeify(callback)
 
 	_resolveAllSources: ->
 		debug "resolving all sources"

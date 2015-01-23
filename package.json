@@ -1,6 +1,6 @@
 {
   "name": "combined-stream2",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A drop-in Streams2-compatible replacement for combined-stream.",
   "main": "index.js",
   "scripts": {

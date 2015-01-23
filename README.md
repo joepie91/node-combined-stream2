@@ -100,13 +100,15 @@ Adds a source to the combined stream. Valid sources are streams, Buffers, and ca
 
 * __source__: The source to add.
 * __options__: *Optional.* Additional stream options.
-	* __contentLength__: The length of the stream. Useful if your stream type is not supported by `stream-length`, but you know the length of the stream in advance. Also available as `knownLength` for backwards compatibility reasons.
+	* __contentLength__: The length of the stream. Useful if your stream type is not supported by [`stream-length`](https://www.npmjs.com/package/stream-length), but you know the length of the stream in advance. Also available as `knownLength` for backwards compatibility reasons.
 
-### combinedStream.getCombinedStreamLength()
+### combinedStream.getCombinedStreamLength([callback])
 
 __This method will 'resolve' all callback-supplied streams, as if the stream were being read.__
 
 Asynchronously returns the total length of all streams (and Buffers) together. If the total length cannot be determined (ie. at least one of the streams is of an unsupported type), an error is thrown asynchronously.
+
+If you specify a `callback`, it will be treated as a nodeback. If you do *not* specify a `callback`, a Promise will be returned.
 
 This functionality uses the [`stream-length`](https://www.npmjs.com/package/stream-length) module.
 
