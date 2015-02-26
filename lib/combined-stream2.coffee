@@ -15,16 +15,25 @@ ofTypes = (obj, types) ->
 isStream = (obj) ->
 	return ofTypes obj, [stream.Readable, stream.Duplex, stream.Transform, stream.Stream]
 
-makeStreams2 = (stream) ->
+makeStreams2 = (sourceStream) ->
 	# Adapted from https://github.com/feross/multistream/blob/master/index.js
-	if not stream or typeof stream == "function" or stream instanceof Buffer or stream._readableState?
-		return stream
+	if not sourceStream or typeof sourceStream == "function" or sourceStream instanceof Buffer or sourceStream._readableState?
+		debug "already streams2 or otherwise compatible"
+		return sourceStream
 
+	if sourceStream.httpModule?
+		# This is a special case for `request`, because it does weird stream hackery.
+		# NOTE: The caveat is that this will buffer up in memory.
+		debug "found `request` stream, using PassThrough stream..."
+		return sourceStream.pipe(new stream.PassThrough())
+
+	debug "wrapping stream..."
 	wrapper = new stream.Readable().wrap(stream)
 
-	if stream.destroy?
-		wrapper.destroy = stream.destroy.bind(stream)
+	if sourceStream.destroy?
+		wrapper.destroy = sourceStream.destroy.bind(sourceStream)
 
+	debug "returning streams2-wrapped stream"
 	return wrapper
 
 # The actual stream class definition
@@ -116,6 +125,7 @@ class CombinedStream extends stream.Readable
 	_nextSource: (readSize) ->
 		if @_sources.length == 0
 			# We've run out of sources - signal EOF and bail.
+			debug "ran out of streams; pushing EOF"
 			@push null
 			return
 

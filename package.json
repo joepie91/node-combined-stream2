@@ -1,6 +1,6 @@
 {
   "name": "combined-stream2",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A drop-in Streams2-compatible replacement for combined-stream.",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,8 @@
     "gulp-plumber": "~0.6.3",
     "gulp-remember": "~0.2.0",
     "gulp-rename": "~1.2.0",
-    "gulp-util": "~2.2.17"
+    "gulp-util": "~2.2.17",
+    "request": "^2.53.0"
   },
   "dependencies": {
     "debug": "^2.1.1",

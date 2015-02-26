@@ -36,6 +36,16 @@ Note that there are a few important differences between `combined-stream` and `c
 
 Most usecases will not be affected by these differences, but your mileage may vary.
 
+## Using `combined-stream2` with `request`
+
+__There's an important caveat when trying to append a `request` stream to a `combined-stream2`.__
+
+Because `request` does a bunch of strange non-standard hackery with streams, it doesn't play nicely with `combined-stream2` (and many other writable/transform streams). For convenience, `combined-stream2` contains a built-in workaround using a `PassThrough` stream specifically for dealing with `request` streams, but __this workaround will likely result in the entire response being buffered into memory.__
+
+Passing in response objects (that is, the object provided in the `response` event handler for a `request` call) is *completely unsupported* - trying to do so will likely break `combined-stream2`. You *must* pass in the `request` object, rather than the `response` object.
+
+I seriously suggest you consider using [`bhttp`](https://www.npmjs.com/package/bhttp) instead - it has much more predictable behaviour.
+
 ## Usage
 
 ```javascript
