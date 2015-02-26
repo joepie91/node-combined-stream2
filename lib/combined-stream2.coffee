@@ -13,7 +13,7 @@ ofTypes = (obj, types) ->
 	return match
 
 isStream = (obj) ->
-	return ofTypes obj, [stream.Readable, stream.Duplex, stream.Transform]
+	return ofTypes obj, [stream.Readable, stream.Duplex, stream.Transform, stream.Stream]
 
 makeStreams2 = (stream) ->
 	# Adapted from https://github.com/feross/multistream/blob/master/index.js
@@ -39,7 +39,7 @@ class CombinedStream extends stream.Readable
 
 	append: (source, options = {}) ->
 		# Only readable binary data sources are allowed.
-		if not ofTypes source, [stream.Readable, stream.Duplex, stream.Transform, Buffer, Function]
+		if not ofTypes source, [stream.Readable, stream.Duplex, stream.Transform, stream.Stream, Buffer, Function]
 			throw new Error "The provided source must be either a readable stream or a Buffer, or a callback providing either of those. If it is currently a string, you need to convert it to a Buffer yourself and ensure that the encoding is correct."
 
 		debug "appending source: %s", source.toString().replace(/\n/g, "\\n").replace(/\r/g, "\\r")
