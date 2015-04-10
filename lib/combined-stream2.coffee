@@ -131,6 +131,7 @@ class CombinedStream extends stream.Readable
 
 		@_currentSource = @_sources.shift()[0]
 		@_currentIsStream = isStream @_currentSource
+		debug "switching to new source (stream = %s): %s", @_currentIsStream, @_currentSource.toString().replace(/\n/g, "\\n").replace(/\r/g, "\\r")
 
 		if @_currentIsStream
 			@_currentSource.once "end", =>
@@ -181,7 +182,12 @@ class CombinedStream extends stream.Readable
 		Promise.try =>
 			@_sourceDataAvailable = false
 			@_wantData = false
-			@push @_currentSource.read()
+			chunk = @_currentSource.read()
+
+			# Since Node.js v0.12, a stream will apparently return null when it is finished... we need to filter this out, to prevent it from ending our combined stream prematurely.
+			if chunk?
+				@push chunk
+
 			Promise.resolve()
 
 # Public module API
