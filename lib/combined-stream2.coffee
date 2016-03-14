@@ -28,7 +28,7 @@ makeStreams2 = (sourceStream) ->
 		return sourceStream.pipe(new stream.PassThrough())
 
 	debug "wrapping stream..."
-	wrapper = new stream.Readable().wrap(stream)
+	wrapper = new stream.Readable().wrap(sourceStream)
 
 	if sourceStream.destroy?
 		wrapper.destroy = sourceStream.destroy.bind(sourceStream)
